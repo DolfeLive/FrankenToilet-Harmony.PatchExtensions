@@ -61,6 +61,9 @@ public sealed class DeltaruneExplosion : MonoBehaviour
     {
         if(LastEffect != null)
             Destroy(LastEffect);
+        if(NewMovement.Instance.dead)
+            return;
+
         var effectInst = Object.Instantiate(effect, effect.transform.parent);
         effectInst.transform.localPosition = effect.transform.localPosition;
         effectInst.SetActive(true);
@@ -89,6 +92,8 @@ public sealed class DeltaruneExplosion : MonoBehaviour
             LogHelper.LogError("[triggeredidiot] ExplodePlayer() called but there is no DeltaruneExplosion premade!");
             return;
         }
+        if(NewMovement.Instance.dead)
+            return;
 
         _instance.Explode();
     }

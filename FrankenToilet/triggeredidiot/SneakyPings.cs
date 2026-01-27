@@ -17,7 +17,7 @@ public static class SneakyPingsInjector_Start
         float minTime = 20000.0f;
         float maxTime = 30000.0f;
 
-        if (SteamHelper.IsSlopTuber)
+        if (AssetsController.IsSlopSafe)
         {
             minTime = 60;
             maxTime = 240;

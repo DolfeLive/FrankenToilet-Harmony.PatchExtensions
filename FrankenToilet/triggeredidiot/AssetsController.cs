@@ -13,6 +13,22 @@ public static class AssetsController
 {
     private static AssetBundle _assets;
 
+    // IsSlopTuber errored once so im paranoid now
+    public static bool IsSlopSafe
+    {
+        get
+        {
+            try
+            {
+                return SteamHelper.IsSlopTuber;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+
     [EntryPoint]
     public static void Init()
     {

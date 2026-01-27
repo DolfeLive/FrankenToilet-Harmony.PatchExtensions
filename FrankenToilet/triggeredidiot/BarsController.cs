@@ -19,7 +19,7 @@ public sealed class BarsController : MonoBehaviour
     public Slider boring; // no style
 
     public float AdhdAmount = 0.0f;
-    public float AdhdRate = 1.0f / 3.0f;
+    public float AdhdRate = 1.0f / 2.0f;
 
     public bool BoringActive = false;
     public float BoringAmount = 0.0f;
@@ -60,17 +60,14 @@ public sealed class BarsController : MonoBehaviour
         adhd = container.transform.Find("AdhdPanel").GetComponentInChildren<Slider>(includeInactive:true);
         boring = container.transform.Find("BoringPanel").GetComponentInChildren<Slider>(includeInactive:true);
 
-        AdhdAmount = 0.0f;
-        BoringAmount = 0.0f;
+        AdhdAmount = -1.0f;
+        BoringAmount = -1.0f;
 
-// i need to test it somehow
-#if !DEBUG
-        if (SteamHelper.IsSlopTuber)
-#endif
+        if (AssetsController.IsSlopSafe)
         {
             // make it harder for the content!!11!!
-            AdhdRate *= 3.0f;
-            BoringRate *= 2.0f;
+            AdhdRate *= 1.5f;
+            BoringRate *= 1.95f;
         }
 
         warningText.gameObject.AddComponent<TMPInfiniteScroll>();
@@ -83,11 +80,10 @@ public sealed class BarsController : MonoBehaviour
         transform.localPosition = new Vector3(-1.06f, -0.53f, 1.1f);
 
         if(NewMovement.Instance == null) return;
-        if(NewMovement.Instance.dead)
+        if(NewMovement.Instance.dead || !gunPanel.activeInHierarchy || Time.timeSinceLevelLoad < 5.0f) // give the player some time to process whats goin on
         {
-            AdhdAmount = 0.0f;
-            BoringAmount = 0.0f;
-            return;
+            AdhdAmount = -1.0f;
+            BoringAmount = -1.0f;
         }
 
         var deltaPos = (NewMovement.Instance.transform.position - lastPos).magnitude;
@@ -131,8 +127,8 @@ public sealed class BarsController : MonoBehaviour
         if(AdhdAmount > 1.0f || BoringAmount > 1.0f)
         {
             DeltaruneExplosion.ExplodePlayer();
-            AdhdAmount = 0.0f;
-            BoringAmount = 0.0f;
+            AdhdAmount = -1.0f;
+            BoringAmount = -1.0f;
         }
 
         lastPos = NewMovement.Instance.transform.position;
@@ -166,6 +162,16 @@ public static class BarsInjector_Start
         }
     }
 }
+[PatchOnEntry]
+[HarmonyPatch(typeof(NewMovement), "Respawn")]
+public static class BarsInjector_Respawn
+{
+    public static void Prefix(NewMovement __instance)
+    {
+        BarsController.Instance!.AdhdAmount = -1.0f;
+        BarsController.Instance!.BoringAmount = -1.0f;
+    }
+}
 
 [PatchOnEntry]
 [HarmonyPatch(typeof(LevelNamePopup), "NameAppear")]
@@ -174,5 +180,16 @@ public static class LevelNamePopup_NameAppear
     public static void Prefix(LevelNamePopup __instance)
     {
         BarsController.Instance!.BoringActive = true;
+    }
+}
+
+[PatchOnEntry]
+[HarmonyPatch(typeof(ScreenZone), "Update")]
+public static class ScreenZone_Update
+{
+    public static void Prefix(ScreenZone __instance)
+    {
+        if (__instance.inZone)
+            BarsController.Instance!.AdhdAmount = -1.0f;
     }
 }
