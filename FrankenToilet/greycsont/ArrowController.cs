@@ -28,7 +28,7 @@ public static class ArrowController
         
         imgObj.transform.SetAsLastSibling();
         
-        var clip = AssetBundleController.audioCaches["SecretCommand_" + DirectionRandomizer.randomDirection];
+        var clip = AssetBundleController.audioCaches["sam_" + DirectionRandomizer.randomDirection];
     
         if (clip != null)
         {
