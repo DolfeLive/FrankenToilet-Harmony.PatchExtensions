@@ -26,7 +26,7 @@ public static class BundleLoader
     public static AudioClip MinosDime;
 
     /// <summary> silly </summary>
-    public static Sprite UlraKil, ulakill, Flash;
+    public static Sprite UlraKil, ulakill, Flash, DoomahImg;
 
     /// <summary> the budget was dropped for maurice </summary>
     public static GameObject MauriceBad;
@@ -45,6 +45,7 @@ public static class BundleLoader
         UlraKil = assetBundle.LoadAsset<Sprite>("assets/ultrakill wingdings.png");
         ulakill = assetBundle.LoadAsset<Sprite>("assets/title.png");
         Flash = assetBundle.LoadAsset<Sprite>("assets/flash.jpeg");
+        DoomahImg = assetBundle.LoadAsset<Sprite>("assets/doomah.png");
         MauriceBad = assetBundle.LoadAsset<GameObject>("assets/mauricebad.prefab");
     }
 
