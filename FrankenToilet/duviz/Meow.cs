@@ -160,22 +160,16 @@ public class Meow : MonoBehaviour
             foreach (var obj in objs)
             {
                 if (obj.name == "GlobalLights")
-                {
                     foreach (Transform tr in obj.transform)
                         tr.gameObject.SetActive(false);
-                }
                 if (obj.name == "Point Light (5)")
-                {
                     obj.GetComponent<Light>().intensity /= 5;
-                }
             }
-            foreach (var c in puz) {
+            foreach (var c in puz)
                 foreach (Transform cc in c.transform)
-                {
                     if (!cc.gameObject.activeSelf)
                         cc.gameObject.SetActive(UnityEngine.Random.Range(0, 2) == 0);
-                }
-            }
+            ReplaceEverything();
         }
     }
 

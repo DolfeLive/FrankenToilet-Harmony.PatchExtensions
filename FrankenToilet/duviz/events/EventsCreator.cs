@@ -84,9 +84,14 @@ public class EventsCreator : MonoBehaviour
             NewMovement.instance.transform.localScale *= 0.5f;
         });
 
+        EventsManager.AddEvent("nO STAMINA").AddListener(() =>
+        {
+            NewMovement.instance.EmptyStamina();
+        });
+
         EventsManager.AddEvent("Imagine").AddListener(() =>
         {
-            NewMovement.instance.rb.velocity = new Vector3(0, 100, 0);
+            NewMovement.instance.rb.velocity = new Vector3(0, 1000, 0);
         });
 
         EventsManager.AddEvent("God is angry at you").AddListener(() =>

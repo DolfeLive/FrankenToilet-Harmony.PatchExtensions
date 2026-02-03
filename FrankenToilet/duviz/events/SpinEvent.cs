@@ -21,6 +21,7 @@ public class SpinEvent : MonoBehaviour
 
     public void LateUpdate()
     {
+        if (CameraController.instance == null) return;
         visibleOffset = Vector3.Lerp(visibleOffset, offset, Mathf.Clamp01(Time.deltaTime * 5));
         offset = Vector3.Lerp(offset, Vector3.zero, Mathf.Clamp01(Time.deltaTime));
 

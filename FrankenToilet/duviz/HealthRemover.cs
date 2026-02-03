@@ -106,3 +106,15 @@ public class NewMovementGetHealthPatch
         return false;
     }
 }
+
+[PatchOnEntry]
+[HarmonyPatch(typeof(NewMovement), "FullHeal")]
+public class NewMovementFullHealPatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(NewMovement __instance, bool silent)
+    {
+        __instance.GetHealth(1000, silent, false, false);
+        return false;
+    }
+}
