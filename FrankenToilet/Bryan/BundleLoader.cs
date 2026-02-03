@@ -27,7 +27,7 @@ public static class BundleLoader
     public static AudioClip MinosDime;
 
     /// <summary> silly </summary>
-    public static Sprite UlraKil, ulakill, Flash, DoomahImg;
+    public static Sprite UlraKil, ulakill, Flash, DoomahImg, Trans;
 
     /// <summary> the budget was dropped for maurice </summary>
     public static GameObject MauriceBad;
@@ -37,6 +37,12 @@ public static class BundleLoader
 
     /// <summary> ULTRAKILL projectile prefab. </summary>
     public static GameObject Projectile;
+
+    /// <summary> ha ha ha ha </summary>
+    public static RuntimeAnimatorController BadLaughingSkullAnim;
+
+    /// <summary> such an evil lil fella :3 </summary>
+    public static AudioClip BadLaughing;
 
     /// <summary> Load the asset bundle. </summary>
     public static void Load()
@@ -53,9 +59,12 @@ public static class BundleLoader
         ulakill = assetBundle.LoadAsset<Sprite>("assets/title.png");
         Flash = assetBundle.LoadAsset<Sprite>("assets/flash.jpeg");
         DoomahImg = assetBundle.LoadAsset<Sprite>("assets/doomah.png");
+        Trans = assetBundle.LoadAsset<Sprite>("assets/trans.png");
         MauriceBad = assetBundle.LoadAsset<GameObject>("assets/mauricebad.prefab");
         DoomahReal = assetBundle.LoadAsset<GameObject>("assets/doomahreal.prefab");
         Doomah = assetBundle.LoadAsset<GameObject>("assets/doomah.prefab");
+        BadLaughingSkullAnim = assetBundle.LoadAsset<RuntimeAnimatorController>("assets/bad laughing skull.controller");
+        BadLaughing = assetBundle.LoadAsset<AudioClip>("assets/1bitahh.mp3");
 
         Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Attacks and Projectiles/Projectile.prefab").WaitForCompletion();
         Projectile = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Attacks and Projectiles/Projectile.prefab").WaitForCompletion();
