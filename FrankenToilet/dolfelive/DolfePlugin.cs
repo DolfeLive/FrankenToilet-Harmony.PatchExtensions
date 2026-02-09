@@ -60,6 +60,7 @@ public class DolfePlugin
             foreach (AudioSource child in audioChildren)
             {
                 child.maxDistance *= 1.2f;
+                child.volume = PrefsManager.Instance.GetFloat("allVolume");
             }
             
             // overlayMaterial = bundle.LoadAsset<Material>("Assets/Sin/SinAngy/SurfaceBroken.mat");
