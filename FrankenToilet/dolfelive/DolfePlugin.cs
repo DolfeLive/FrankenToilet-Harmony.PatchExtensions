@@ -1,4 +1,6 @@
-﻿﻿using FrankenToilet.Core;
+﻿﻿using System;
+ 
+ using FrankenToilet.Core;
  using HarmonyLib;
  using HarmonyLib.PatchExtensions;
 using TMPro;
@@ -74,7 +76,8 @@ public class DolfePlugin
         
         SceneManager.sceneLoaded += (_, _) =>
         {
-            PatchClass.graceTime = 40f;
+            PatchClass.graceTime = 10f;
+            PatchClass.respawnSecondsOffset = 0f;
             
             StatsManager? sm = StatsManager.Instance;
             if (sm == null)
@@ -141,8 +144,9 @@ public class DolfePlugin
 [PatchOnEntry]
 public static class PatchClass
 {
-    public static float graceTime = 40f;
-    private const float lessTime = 180f;//0f; //115f 
+    public static float graceTime = 10f;
+    public static float maxGraceTime = 60f;
+    private const float lessTime = 180f; //0f; //115f 
     public static float respawnSecondsOffset = 0f;
     
     #if DEBUG
@@ -162,6 +166,9 @@ public static class PatchClass
     [Patch(typeof(StatsManager), "Update", AT.RETURN)]
     public static void SecondsInc(float ___seconds)
     {
+        if (SceneHelper.CurrentScene != "uk_construct" && SceneHelper.CurrentScene != "Endless")
+            return;
+        
         if (DolfePlugin.countdown != null && !DolfePlugin.countdown._sinSpawned)
         {
             float secondsSinceNotDying = ___seconds - respawnSecondsOffset;
@@ -177,8 +184,8 @@ public static class PatchClass
             DolfePlugin.countdown?.StartTimer();
             DolfePlugin.countdown?.countingDown = ___timer;
             
-            float secondsSinceNotDying = ___seconds - respawnSecondsOffset;
-            LogHelper.LogDebug($"SRankTime: {DolfePlugin.sRankTime}, lessTime: {lessTime}, secondsSinceNotDying: {secondsSinceNotDying}, graceTime: {graceTime}");
+            // float secondsSinceNotDying = ___seconds - respawnSecondsOffset;
+            // LogHelper.LogDebug($"SRankTime: {DolfePlugin.sRankTime}, lessTime: {lessTime}, secondsSinceNotDying: {secondsSinceNotDying}, graceTime: {graceTime}");
         }
     }
     
@@ -222,9 +229,11 @@ public static class PatchClass
             }
             GameObject.Destroy(DolfePlugin.realSin);
             DolfePlugin.realSin = null!;
+            DolfePlugin.sinInstance = null;
         }
         
-        graceTime += 20f;
+        if (graceTime < maxGraceTime)
+            graceTime = MathF.Min(graceTime + 20f, maxGraceTime);
     }
     
     [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.OnTravel))]
