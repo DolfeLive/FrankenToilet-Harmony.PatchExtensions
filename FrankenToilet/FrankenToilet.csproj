@@ -128,10 +128,6 @@
     <EmbeddedResource Include="mercy\assets.bundle" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="FrankenToilet.csproj.user" />
-  </ItemGroup>
-
   <Target Name="CopyHarmonyExtensionDeps" AfterTargets="Build">
     <ItemGroup>
       <HarmonyDll Include="$(PkgHarmony_PatchExtensions)/lib/netstandard2.1/Harmony.PatchExtensions.dll" />
