@@ -74,7 +74,7 @@ public sealed class Sin : MonoBehaviour
     {
         Camera.main.useOcclusionCulling = false;
         
-        trailParent = Instantiate(new GameObject("trailParent")).transform;
+        trailParent = new GameObject("trailParent").transform;
 
         if (frames.Length > 0) image.sprite = frames[0];
 

@@ -146,7 +146,7 @@ public static class PatchClass
 {
     public static float graceTime = 10f;
     public static float maxGraceTime = 60f;
-    private const float lessTime = 180f; //0f; //115f 
+    private const float lessTime = 0f; //0f; //115f 
     public static float respawnSecondsOffset = 0f;
     
     #if DEBUG
@@ -163,7 +163,7 @@ public static class PatchClass
     }
     #endif
     
-    [Patch(typeof(StatsManager), "Update", AT.RETURN)]
+    [Patch(typeof(StatsManager), "Update", AT.POSTFIX)]
     public static void SecondsInc(float ___seconds)
     {
         if (SceneHelper.CurrentScene != "uk_construct" && SceneHelper.CurrentScene != "Endless")
@@ -176,7 +176,7 @@ public static class PatchClass
         }
     }
     
-    [Patch(typeof(StatsManager), "StartTimer", AT.RETURN)]
+    [Patch(typeof(StatsManager), "StartTimer", AT.POSTFIX)]
     public static void StartTimerPatch(ref bool ___timer, float ___seconds)
     {
         if (SceneHelper.CurrentScene != "uk_construct" && SceneHelper.CurrentScene != "Endless")
@@ -189,20 +189,20 @@ public static class PatchClass
         }
     }
     
-    [Patch(typeof(StatsManager), "StopTimer", AT.RETURN)]
+    [Patch(typeof(StatsManager), "StopTimer", AT.POSTFIX)]
     public static void StopTimerPatch(ref bool ___timer)
     {
         if (SceneHelper.CurrentScene != "uk_construct" && SceneHelper.CurrentScene != "Endless")
             DolfePlugin.countdown?.StopTimer();
     }
     
-    [Patch(typeof(StatsManager), "Restart", AT.RETURN)]
+    [Patch(typeof(StatsManager), "Restart", AT.POSTFIX)]
     public static void SetRespawnOffset(float ___seconds)
     {
         respawnSecondsOffset = ___seconds;
     }
     
-    [Patch(typeof(NewMovement), "Respawn", AT.RETURN)]
+    [Patch(typeof(NewMovement), "Respawn", AT.POSTFIX)]
     public static void RespawnPatch()
     {
         DolfePlugin.countdown?.StopTimer();

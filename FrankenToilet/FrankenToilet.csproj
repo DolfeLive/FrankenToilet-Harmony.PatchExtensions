@@ -34,7 +34,7 @@
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.29" IncludeAssets="compile" />
     <PackageReference Include="MonoMod.Backports" Version="1.1.2" GeneratePathProperty="true" />
     <PackageReference Include="MonoMod.ILHelpers" Version="1.1.0" GeneratePathProperty="true" />
-    <PackageReference Include="Harmony.PatchExtensions" Version="1.1.0" GeneratePathProperty="true" />
+    <PackageReference Include="Harmony.PatchExtensions" Version="1.2.0" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
@@ -126,6 +126,10 @@
     <EmbeddedResource Include="bobthecorn\ultraclicker_assets_all.bundle" />
     <EmbeddedResource Include="somebilly\assets.bundle" />
     <EmbeddedResource Include="mercy\assets.bundle" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FrankenToilet.csproj.user" />
   </ItemGroup>
 
   <Target Name="CopyHarmonyExtensionDeps" AfterTargets="Build">

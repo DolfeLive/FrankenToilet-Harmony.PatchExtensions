@@ -110,7 +110,7 @@ public sealed class DolfeCountdown : MonoBehaviour
                 _audioPaused = false;
             }
 
-            if (Time.deltaTime == 0)
+            if (Time.deltaTime == 0f)
             {
                 _audioSource.Pause();
                 _audioPaused = true;
